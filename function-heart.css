@@ -66,3 +66,8 @@ body {
   margin-bottom: 20px; /* Kanvas ile arasında boşluk */
   text-shadow: 0 0 10px rgba(231, 12, 158, 0.7); /* Gölgeyi yeni renge uyumlu hale getir */
 }
+html, body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
