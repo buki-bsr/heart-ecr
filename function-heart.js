@@ -1,22 +1,33 @@
 e = [];
 h = [];
-O = c.width = innerWidth;
-Q = c.height = innerHeight;
+var dpr = window.devicePixelRatio || 1;
 
-v = 32; 
+c.width = window.innerWidth * dpr;
+c.height = window.innerHeight * dpr;
+c.style.width = window.innerWidth + 'px';
+c.style.height = window.innerHeight + 'px';
+
+a.scale(dpr, dpr);
+
+var O = window.innerWidth;
+var Q = window.innerHeight;
+
+v = 32;
 M = Math;
 R = M.random;
 C = M.cos;
 Y = 6.3;
-for (i = 0; i < Y; i += .2) {
+
+for (i = 0; i < Y; i += 0.2) {
     h.push([
-        O / 2 + 180 * M.pow(M.sin(i), 3),
-        Q / 2 + 10 * (-(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i)))
-    ])
+        O / 2 + 280 * M.pow(M.sin(i), 3),    // 180 → 280 (büyüttüm)
+        Q / 2 + 20 * (-(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i))) // 10 → 20 (büyüttüm)
+    ]);
 }
 
 i = 0;
 while (i < v) {
+
     x = R() * O;
     y = R() * Q;
 
@@ -37,9 +48,9 @@ while (i < v) {
             S: R() + 1,
             q: ~~(R() * v),
             D: i % 2 * 2 - 1,
-            F: R() * .2 + .7,
+            F: R() * 0.2 + 0.7,
             f: "hsla(" + ~~H + "," + ~~S + "%," + ~~B + "%,.5)"
-        }
+        };
     }
 
     e[i++] = f;
@@ -54,11 +65,12 @@ function render(_) {
 }
 
 function loop() {
-    a.fillStyle = "rgba(0, 0, 0, 0.6)";
+    a.fillStyle = "rgba(0,0,0,.2)";
     a.fillRect(0, 0, O, Q);
 
     i = v;
     while (i--) {
+
         f = e[i];
         u = f[0];
         q = h[u.q];
@@ -97,15 +109,16 @@ function loop() {
             N.y -= (N.y - T.y) * .7;
 
             render(N);
+
         }
+
     }
 
-    // 💖 Yazıyı kalbin merkezine ekle
+    // Yazıyı kalbin ortasına çiz (font büyütüldü)
     a.fillStyle = "rgba(231, 12, 158, 0.7)";
-	a.fillStyle ="text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);";
-    a.font = "90px Gwendolyn";
+    a.font = "130px Gwendolyn";
     a.textAlign = "center";
-    a.fillText("Yağmur", O / 2, Q / 2 + 10);
+    a.fillText("Yağmur", O / 2, Q / 2 + 15);
 }
 
 (function doit() {
@@ -114,8 +127,26 @@ function loop() {
 }());
 
 window.addEventListener('resize', function () {
-    O = c.width = innerWidth;
-    Q = c.height = innerHeight;
+    var dpr = window.devicePixelRatio || 1;
+
+    c.width = window.innerWidth * dpr;
+    c.height = window.innerHeight * dpr;
+    c.style.width = window.innerWidth + 'px';
+    c.style.height = window.innerHeight + 'px';
+
+    a.scale(dpr, dpr);
+
+    O = window.innerWidth;
+    Q = window.innerHeight;
+
+    // Kalp yolunu yeniden oluştur
+    h = [];
+    for (let i = 0; i < Y; i += 0.2) {
+        h.push([
+            O / 2 + 280 * M.pow(M.sin(i), 3),
+            Q / 2 + 20 * (-(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i)))
+        ]);
+    }
 });
 
 window.addEventListener('wheel', function (e) {
